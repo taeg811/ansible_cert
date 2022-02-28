@@ -1,0 +1,28 @@
+---
+- name: Generate an OpenSSL cert self signed
+  hosts: localhost
+#  gather_facts: true
+#  become: true
+  vars:
+    serv: cw.uven.ru 
+  
+  tasks:
+    - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+      openssl_privatekey:
+        path: "./files/{{ serv }}_priv.pem"
+
+    - name: Generate an OpenSSL Certificate Signing Request with Subject information
+      openssl_csr:
+        path: "./files/{{ serv }}.csr"
+        privatekey_path: "./files/{{ serv }}_priv.pem"
+        country_name: RU
+        organization_name: university
+        email_address: lena@uven.ru
+        common_name: "{{ serv }}"
+
+    - name: Generate a Self Signed OpenSSL certificate
+      openssl_certificate:
+        path: "./files/{{ serv }}.crt"
+        privatekey_path: "./files/{{ serv }}_priv.pem"
+        csr_path: "./files/{{ serv }}.csr"
+        provider: selfsigned
