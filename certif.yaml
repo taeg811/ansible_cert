@@ -4,7 +4,7 @@
 #  gather_facts: true
 #  become: true
   vars:
-    serv: cw.uven.ru 
+    serv: cw.uv.ru 
   
   tasks:
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
@@ -17,7 +17,7 @@
         privatekey_path: "./files/{{ serv }}_priv.pem"
         country_name: RU
         organization_name: university
-        email_address: lena@uven.ru
+        email_address: len@uv.ru
         common_name: "{{ serv }}"
 
     - name: Generate a Self Signed OpenSSL certificate
